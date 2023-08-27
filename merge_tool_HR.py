@@ -1,37 +1,35 @@
+def recursion(str):
+    if str != '':
+        li = list(str)
+        i = str[0]
+        if li.count(str[0]) > 1:
+            string = str.replace(i, '')
+            return i + recursion(string)
+        else:
+            string = str[1:]
+            return i + recursion(string)
+    else:
+        return ''
+
+
 def merge_the_tools(string, k):
     # your code goes here
-    n=len(string)
-    if (n%k==0):
-        str=[string[i:i+k] for i in range(0, len(string), k)]
-    i=0 
-    new_str=[]
-    while (i<len(str)):
-        word=str[i]
-        wr=""
-        for s in range(0,len(word)):
-            if(s+1<len(word)):
-                if (word[s]==word[s+1]):
-                    wr+=word[s]
-                else:
-                    wr=word[s]+word[s+1]
-            else:
-                wr+=word[s]
-            
-                    
-                    
-        new_str.append(wr)
-        i+=1
-    print(new_str)
-       
-                
-            
-            
-            
-            
-        
-        
+    if k > 1:
+
+        li = []
+        a = 0
+        for i in range(0, k):
+            li.append(string[a:k+a])
+            a += k
+
+        for i in li:
+            print(recursion(i))
+    else:
+        li = list(string)
+        for i in li:
+            print(i)
+
 
 if __name__ == '__main__':
     string, k = input(), int(input())
     merge_the_tools(string, k)
-
