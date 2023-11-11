@@ -20,7 +20,7 @@
 import os
 import requests
 
-
+import shutil
 DOWNLOAD_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DOWNLOAD_NAME = os.path.join(DOWNLOAD_DIR, 'download1')
@@ -29,8 +29,14 @@ ADD_FILE = os.path.join(DOWNLOAD_NAME, "image.jpg")
 
 url ='https://imgs.search.brave.com/G7PMeUgzG1zh75C7cIXIVWlrcnUczSU8lKlLqkCC16w/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMw/OTMyODgyMy9waG90/by9oZWFkc2hvdC1w/b3J0cmFpdC1vZi1z/bWlsaW5nLW1hbGUt/ZW1wbG95ZWUtaW4t/b2ZmaWNlLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1rUHZv/Qm02cUNZelFYTUFu/OUpVdHFMUkVYZTkt/UGxaeU1sOWktaWJh/VnVZPQ'
 
-r = requests.get(url)
+r = requests.get(url, stream = True)
 r.raise_for_status
 with open(ADD_FILE,'wb') as f:
     f.write(r.content)
-    
+  
+  
+dl_filename = os.path.basename(url)  
+new_dl_path = os.path.join(DOWNLOAD_NAME,dl_filename)
+with requests.get(url, stream = True) as r:
+    with open(new_dl_path,'wb') as file_obj:
+        shutil.copyfileobj(r.raw, file_obj)
